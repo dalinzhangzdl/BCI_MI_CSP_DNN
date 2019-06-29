@@ -13,10 +13,10 @@ EEG signals, a co-space model (CSP) method is used to extract the EEG feature ma
 best DNN framework was proposed, achieving an accuracy of 83.6%.<br>
 
 ## Notice
-  Bandpass_filter              Bandpass fliter with frequency 10-12Hz
-  Data_preprocessing.m         EEG data preprocessing
-  CSP_extraction_feature.m     Extra CSP features
-  DNN.m                        Train and test the CSP-DNN 网络  
-  Four_layer_BPNN.m            The four - layer BP network was compared
-  graz_data                    EEG datasets
+  Bandpass_filter              Bandpass fliter with frequency 10-12Hz<br>
+  Data_preprocessing.m         EEG data preprocessing<br>
+  CSP_extraction_feature.m     Extra CSP features<br>
+  DNN.m                        Train and test the CSP-DNN network  <br>
+  Four_layer_BPNN.m            The four - layer BP network was compared <br>
+  graz_data                    BCI Competition2003 Dataset III. EEG datasets <br>
  

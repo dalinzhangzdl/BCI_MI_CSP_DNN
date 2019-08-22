@@ -6,8 +6,8 @@ EEG_Channels = size(EEGSignals.x_train,2);
 EEG_Trials = size(EEGSignals.x_train,3);
 for i = 1:EEG_Trials
     for j = 1:EEG_Channels
-        x_train(:,j,i) = filter(Bandpass_filter,EEGSignals.x_train(513:768,j,i));
-        x_test(:,j,i) = filter(Bandpass_filter,EEGSignals.x_test(513:768,j,i));
+        x_train(:,j,i) = filter(Bandpass_filter,EEGSignals.x_train(513:768,j,i));   % Time period selection
+        x_test(:,j,i) = filter(Bandpass_filter,EEGSignals.x_test(513:768,j,i));     % band-pass firfilter
     end
     y_train(i,:) = EEGSignals.y_train(i,:);
 end

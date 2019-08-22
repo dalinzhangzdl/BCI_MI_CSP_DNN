@@ -1,21 +1,16 @@
 %% Construct Deep Network Using Autoencoders
-% Load the sample data.
-
-% Copyright 2015 The MathWorks, Inc.
 % CSP-DNN
 clc;
 clear;
+% Load the sample data.
 load('CSP_feature.mat')
 load('label.mat')
 CSP_DNN_Train_data = CSP_Train_feature';
 CSP_DNN_Test_data = CSP_Test_feature';
-%[X,T] = wine_dataset;
 X = CSP_DNN_Train_data;
 T = Train_label;
 %%
-% Train an autoencoder with a hidden layer of size 10 and a linear transfer
-% function for the decoder. Set the L2 weight regularizer to 0.001,
-% sparsity regularizer to 4 and sparsity proportion to 0.05.
+% Train an autoencoder with a hidden layer of size 15 and a linear transfer
 hiddenSize = 15;
 autoenc1 = trainAutoencoder(X,hiddenSize,...
     'L2WeightRegularization',0.001,...

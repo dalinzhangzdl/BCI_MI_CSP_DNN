@@ -1,46 +1,45 @@
 clc;
 clear;
-EEGSignals = load('graz_data/CSP_train.mat');   % 加载带通滤波后的脑电数据
+EEGSignals = load('graz_data/CSP_train.mat');   % load the filtered EEG data 
 %check and initializations
 EEG_Channels = size(EEGSignals.x_train,2);
 EEG_Trials = size(EEGSignals.x_train,3);
 classLabels = unique(EEGSignals.y_train);% Return non-repeating values
 EEG_Classes = length(classLabels);
-covMatrix = cell(EEG_Classes,1); % 协方差矩阵
+covMatrix = cell(EEG_Classes,1); % covariance matrix
 % Computing the normalized covariance matrices for each trial
 trialCov = zeros(EEG_Channels,EEG_Channels,EEG_Trials);
 for i = 1:EEG_Trials
     E = EEGSignals.x_train(:,:,i)';
     EE = E*E';
-    trialCov(:,:,i) = EE./trace(EE);  % 计算协方差矩阵
+    trialCov(:,:,i) = EE./trace(EE);  % compute covariance matrix
 end
 clear E;
 clear EE;
-% 计算每一类样本数据的空间协方差之和
+% Calculate the sum of the spatial covariances for each class of sample data
 for i = 1:EEG_Classes
     covMatrix{i} = mean(trialCov(:,:,EEGSignals.y_train == classLabels(i)),3);
 end
-% 计算两类数据的空间协方差之和
+% Calculate the sum of the spatial covariances of the two types of data
 covTotal = covMatrix{1} + covMatrix{2};
-% 计算特征向量和特征矩阵
+% Calculate eigenvectors and eigenmatrices
 [Uc,Dt] = eig(covTotal);
-% 特征值要降序排列
+% Descending order of eigenvalues
 eigenvalues = diag(Dt);
-[eigenvalues,egIndex] = sort(eigenvalues, 'descend');% 降序
+[eigenvalues,egIndex] = sort(eigenvalues, 'descend');% descend
 Ut = Uc(:,egIndex);
-% 矩阵白化
 P = diag(sqrt(1./eigenvalues))*Ut';
-% 矩阵P作用求公共特征向量transformedCov1 
+% common eigenvector transformedCov1 
 transformedCov1 = P*covMatrix{1}*P';
-%计算公共特征向量transformedCov1的特征向量和特征矩阵
+% Calculate eigenvectors and eigenmatrices
 [U1,D1] = eig(transformedCov1);
 eigenvalues = diag(D1);
-[eigenvalues,egIndex] = sort(eigenvalues, 'descend');% 降序排列
+[eigenvalues,egIndex] = sort(eigenvalues, 'descend');% descend order
 U1 = U1(:, egIndex);
-% 计算投影矩阵W
+% Calculate the projection matrix W
 CSPMatrix = U1' * P;
-% 计算特征矩阵
-FilterPairs = 2;       % CSP特征选择参数m    CSP特征为2*m个
+% EEG feature matrix
+FilterPairs = 2;       % CSP feature selection parameter m    the number of CSP feature is 2*m
 features_train = zeros(EEG_Trials, 2*FilterPairs+1);
 features_test = zeros(EEG_Trials, 2*FilterPairs+1);
 Filter = CSPMatrix([1:FilterPairs (end-FilterPairs+1):end],:);

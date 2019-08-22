@@ -3,7 +3,7 @@ clc;
 % data load
 load('CSP_feature.mat')
 load('label.mat')
-Train_data = CSP_Train_feature'; % 归一化数据
+Train_data = CSP_Train_feature'; % 鹿茅脪禄禄炉脢媒戮脻
 Test_data = CSP_Test_feature';
 
 % Train_label = Train_label';
@@ -34,7 +34,7 @@ for i = 1:s1
         hitNum = hitNum + 1;
     end
 end
-sprintf('识别率是 %3.3f%%',100 * hitNum / s1 )
+sprintf('classification accuarcy %3.3f%%',100 * hitNum / s1 )
 
 
     

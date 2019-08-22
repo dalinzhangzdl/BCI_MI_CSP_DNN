@@ -45,7 +45,7 @@ softnet = trainSoftmaxLayer(features2,T,'LossFunction','crossentropy');
 % Stack the encoders and the softmax layer to form a deep network.
 deepnet = stack(autoenc1,autoenc2,softnet);
 %%
-% Train the deep network on the wine data.
+% Train the deep network on the CSP-EEG data.
 epoches = 1;
 for i = 1:epoches
     deepnet = train(deepnet,X,T);

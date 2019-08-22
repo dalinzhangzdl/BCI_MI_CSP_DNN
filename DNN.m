@@ -52,7 +52,6 @@ for i = 1:epoches
 end
 % save('deepnet');
 %%
-% Estimate the wine types using the deep network, |deepnet|.
 image_type = deepnet(X);
 image_test_type = deepnet(CSP_DNN_Test_data);
 %%
